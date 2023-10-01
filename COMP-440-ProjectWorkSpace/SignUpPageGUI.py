@@ -1,10 +1,13 @@
 import tkinter as tk
 
+import DatabaseControl
+import ErrorBoxGUI
 import LoginPageGUI
 
 class SignUpPageGUI:
 
     def __init__(self):
+        self.db = DatabaseControl.DatabaseControl()
         self.signUpPage = tk.Tk()
         self.signUpPage.geometry('800x500')
         self.signUpPage.title('Sign Up')  # set the name of the window
@@ -64,6 +67,11 @@ class SignUpPageGUI:
     pass
 
     def submitInfo(self):
-        self.signUpPage.destroy()
-        login = LoginPageGUI.LoginPageGUI()
+        key = self.db.signup(self.userNameVar.get(), self.passwordVar.get(), self.passwordConfVar.get(),
+                             self.firstNameVar.get(), self.lastNameVar.get(), self.emailVar.get())
+        if (key == True):
+            self.signUpPage.destroy()
+            login = LoginPageGUI.LoginPageGUI()
+        else:
+            error = ErrorBoxGUI.ErrorBoxGUI('Failed to Sign Up')
     pass

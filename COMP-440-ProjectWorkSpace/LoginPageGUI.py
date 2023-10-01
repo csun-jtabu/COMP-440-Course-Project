@@ -3,40 +3,12 @@ import tkinter as tk
 import ErrorBoxGUI
 import MainMenuGUI
 import SignUpPageGUI
-import mysql.connector
-
-#put your own password here---------------
-dbPassword = 'DataChimneySQL2'
-#-----------------------------------------
-
-logindb = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password=dbPassword,
-    port='3306',
-    database='project440db'
-)
-
-# cursor is how we'll be able to execute sql statements in this program
-mycursor = logindb.cursor()
-
-# this will get everyone in our user database and their information
-mycursor.execute(
-    'SELECT * '
-    'FROM user')
-
-#this will save the tuple data results from the query above into a list
-users = mycursor.fetchall()
-for user in users:
-    print('Username: ' + user[0])
-    print('Password: ' + user[1])
-    print('FirstName: ' + user[2])
-    print('LastName: ' + user[3])
-    print('Email: ' + user[4])
+import DatabaseControl
 
 class LoginPageGUI:
 
     def __init__(self):
+        self.db = DatabaseControl.DatabaseControl()
         self.loginPage = tk.Tk()
         self.loginPage.geometry('800x500')
         self.loginPage.title('Login Page')  # set the name of the window
@@ -75,16 +47,13 @@ class LoginPageGUI:
     pass
 
     def loggedIn(self):
-        key = False#LoginPageGUI.dbaccess()
-        if(key == True):
+        key = self.db.login(self.userNameVar.get(), self.passwordVar.get())
+        if (key == True):
             self.loginPage.destroy()
             menu = MainMenuGUI.MainMenuGUI(userName=self.userNameVar, password=self.passwordVar)
         else:
             self.error('Error: Login Failed')
-    pass
-
-    def dbaccess(self):
-        return True
+            #self.db.printAllUsers()
     pass
 
     def signUp(self):

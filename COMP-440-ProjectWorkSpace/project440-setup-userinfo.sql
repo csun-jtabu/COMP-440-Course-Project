@@ -1,3 +1,4 @@
+CREATE DATABASE project440db
 USE project440db;
 CREATE TABLE userinfo(
 	username VARCHAR(15) NOT NULL PRIMARY KEY,
