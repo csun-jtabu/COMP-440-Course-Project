@@ -1,5 +1,8 @@
 import mysql.connector
 
+import re
+
+
 class DatabaseControl:
 
     def __init__(self):
@@ -42,13 +45,19 @@ class DatabaseControl:
         sqlStatement = "SELECT * FROM user WHERE username = '{}'".format(userName)
         self.myCursor.execute(sqlStatement)
         currentAccount = self.myCursor.fetchone()
-        if currentAccount[0] == userName and currentAccount[1] == password:
-            validity = True
+        if currentAccount != None:
+            if currentAccount[0] == userName and currentAccount[1] == password:
+                validity = True
         return validity
     pass
 
     def signup(self, userName, password, confPass, firstName, lastName, email):
-        if (password == confPass):
+        validatedUser = self.validUserName(userName)
+        validatedPass = self.verifyPassword(password, confPass)
+        validatedfirstName = self.validName(firstName)
+        validatedLastName = self.validName(lastName)
+        validatedEmail = self.validEmail(email)
+        if (validatedUser and validatedPass and validatedfirstName and validatedLastName and validatedEmail):
             sqlStatment = ("INSERT INTO user VALUES(%s, %s, %s, %s, %s);") #user(username, password, firstName, lastName, email)
             sigupValues = (userName, password, firstName, lastName, email)
             self.myCursor.execute(sqlStatment, sigupValues)
@@ -58,4 +67,53 @@ class DatabaseControl:
             return False
     pass
 
+    def verifyPassword(self, password, confPass):
+        validPasswordLength = 16
+        if(password == confPass) and (len(password) <= validPasswordLength):
+            return True
+        else:
+            return False
+    pass
 
+    def validName(self, name):
+        # This pattern is basically saying to find a pattern in which
+        # the inserted string starts with a letter (lowercase/uppercase) and ends with a letter
+        # and has 1 or more alphabets in between
+        validNameLength = 50
+        pattern = "^[a-zA-Z]+$"
+        answerList = re.search(pattern, name)
+        if (answerList != None) and (len(name) <= validNameLength):
+            return True
+        else:
+            return False
+    pass
+
+    def validEmail(self, email):
+        valid = False
+        validEmailLength = 254
+        sqlStatement = "SELECT * FROM user WHERE email = '{}'".format(email)
+        self.myCursor.execute(sqlStatement)
+        selectedEmail = self.myCursor.fetchone()
+        pattern = "^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9_\.\-]+\.[a-zA-Z]{2,7}$"
+        answerList = re.search(pattern, email)
+        if selectedEmail == None:
+            if (answerList != None) and (len(email) <= validEmailLength):
+                valid = True
+            else:
+                valid = False
+        return valid
+    pass
+
+    def validUserName(self, userName):
+        valid = False
+        validUserNameLength = 15
+        sqlStatement = "SELECT * FROM user WHERE username = '{}'".format(userName)
+        self.myCursor.execute(sqlStatement)
+        selectedName = self.myCursor.fetchone()
+        if selectedName == None:
+            if (len(userName) <= validUserNameLength):
+                valid = True
+            else:
+                valid = False
+        return valid
+    pass

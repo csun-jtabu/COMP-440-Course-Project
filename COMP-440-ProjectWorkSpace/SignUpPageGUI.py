@@ -43,6 +43,7 @@ class SignUpPageGUI:
         self.emailEntry = tk.Entry(self.frame, textvariable=self.emailVar, font=('Arial', 16),width=30)
 
         self.signUpBtn = tk.Button(self.frame, bg='#CFDFEF', text='Sign-Up', font=('Arial', 16), command=self.submitInfo)
+        self.backBtn = tk.Button(self.frame, bg='#FFFFE0', text='Back', font=('Arial', 16), command=self.back)
     pass
 
     def formatWidgets(self):
@@ -61,7 +62,8 @@ class SignUpPageGUI:
         self.lastNameEntry.grid(row=5, column=1, pady=10)
         self.emailEntry.grid(row=6, column=1, pady=10)
 
-        self.signUpBtn.grid(row=7, column=2, sticky=tk.S + tk.W, pady=30)
+        self.signUpBtn.grid(row=7, column=2, sticky=tk.S + tk.E, pady=30)
+        self.backBtn.grid(row=7, column=0, sticky=tk.S + tk.W, pady=30)
 
         self.frame.pack()
     pass
@@ -74,4 +76,9 @@ class SignUpPageGUI:
             login = LoginPageGUI.LoginPageGUI()
         else:
             error = ErrorBoxGUI.ErrorBoxGUI('Failed to Sign Up')
+    pass
+
+    def back(self):
+        self.signUpPage.destroy()
+        login = LoginPageGUI.LoginPageGUI()
     pass

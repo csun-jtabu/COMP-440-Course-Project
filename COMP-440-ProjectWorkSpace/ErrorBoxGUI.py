@@ -6,7 +6,7 @@ class ErrorBoxGUI:
         self.text = text
 
         self.errorPage = tk.Toplevel()
-        self.errorPage.geometry('200x200')
+        self.errorPage.geometry('400x200')
         self.errorPage.title('Error')  # set the name of the window
         self.createWidgets()
         self.formatWidgets()
