@@ -42,8 +42,8 @@ class DatabaseControl:
 
     def login(self, userName, password):
         validity = False
-        sqlStatement = "SELECT * FROM user WHERE username = '{}'".format(userName)
-        self.myCursor.execute(sqlStatement)
+        sqlStatement = "SELECT * FROM user WHERE username = %s"
+        self.myCursor.execute(sqlStatement, (userName,))
         currentAccount = self.myCursor.fetchone()
         if currentAccount != None:
             if currentAccount[0] == userName and currentAccount[1] == password:
@@ -91,8 +91,8 @@ class DatabaseControl:
     def validEmail(self, email):
         valid = False
         validEmailLength = 254
-        sqlStatement = "SELECT * FROM user WHERE email = '{}'".format(email)
-        self.myCursor.execute(sqlStatement)
+        sqlStatement = "SELECT * FROM user WHERE email = %s"
+        self.myCursor.execute(sqlStatement, (email,))
         selectedEmail = self.myCursor.fetchone()
         pattern = "^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9_\.\-]+\.[a-zA-Z]{2,7}$"
         answerList = re.search(pattern, email)
@@ -107,8 +107,8 @@ class DatabaseControl:
     def validUserName(self, userName):
         valid = False
         validUserNameLength = 15
-        sqlStatement = "SELECT * FROM user WHERE username = '{}'".format(userName)
-        self.myCursor.execute(sqlStatement)
+        sqlStatement = "SELECT * FROM user WHERE username = %s"
+        self.myCursor.execute(sqlStatement, (userName,))
         selectedName = self.myCursor.fetchone()
         if selectedName == None:
             if (len(userName) <= validUserNameLength):
