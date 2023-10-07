@@ -1,6 +1,6 @@
-CREATE DATABASE project440db
+CREATE DATABASE project440db;
 USE project440db;
-CREATE TABLE userinfo(
+CREATE TABLE user(
 	username VARCHAR(15) NOT NULL PRIMARY KEY,
     password VARCHAR(16) NOT NULL,
     firstName VARCHAR(50) NOT NULL,
