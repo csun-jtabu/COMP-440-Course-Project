@@ -19,11 +19,18 @@ class MainMenuGUI:
         self.frame = tk.Frame()  # frame holds all the widgets in the page
         self.instructText = tk.Label(self.frame, text='You Logged In!', font=('Arial', 30))
         self.tyText = tk.Label(self.frame, text=self.ty, font=('Arial', 30))
+
+        self.insertBtn = tk.Button(self.frame, bg='#CFDFEF', text='Insert', font=('Arial', 16))
+        self.searchBtn = tk.Button(self.frame, bg='#CFDFEF', text='Search', font=('Arial', 16))
+        self.initializeBtn = tk.Button(self.frame, bg='#CFDFEF', text='Initialize Database', font=('Arial', 16))
     pass
 
     def formatWidgets(self):
-        self.instructText.grid(row=0, column=1, columnspan=3, sticky='news', pady=40)
-        self.tyText.grid(row=1, column=1, columnspan=3, sticky='news', pady=40)
+        self.instructText.grid(row=0, column=1, columnspan=3, sticky='news', pady=10)
+        self.tyText.grid(row=1, column=1, columnspan=3, sticky='news', pady=10)
+        self.insertBtn.grid(row=2, column=0, columnspan=2, sticky='w', pady=10)
+        self.searchBtn.grid(row=2, column=2, columnspan=2, sticky='e', pady=10)
+        self.initializeBtn.grid(row=3, column=1, columnspan=3, sticky='news', pady=10)
         self.frame.pack()
     pass
 
