@@ -1,5 +1,4 @@
 USE project440db;
-
 INSERT INTO user (username, password, firstName, lastName, email)
 VALUES 
 ('jaz', 'test', 'Jaztin', 'Tabunda', 'jaztin@my.csun.edu'),

@@ -117,3 +117,18 @@ class DatabaseControl:
                 valid = False
         return valid
     pass
+
+    def loadItemData(self):
+        sqlStatement = "SELECT productid, title, description, category, price FROM item;"
+        self.myCursor.execute(sqlStatement)
+        allItems = self.myCursor.fetchall()
+        return allItems
+    pass
+
+    def searchByCategory(self, category):
+        sqlStatement = ("SELECT productid, title, description, category, price FROM item "
+                        "WHERE category REGEXP %s;")
+        self.myCursor.execute(sqlStatement, (category,))
+        searchedItems = self.myCursor.fetchall()
+        return searchedItems
+    pass

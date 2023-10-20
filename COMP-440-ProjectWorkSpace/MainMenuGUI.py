@@ -1,5 +1,8 @@
 import tkinter as tk
 
+import SearchGUI
+
+
 class MainMenuGUI:
 
     def __init__(self, userName, password):
@@ -21,7 +24,7 @@ class MainMenuGUI:
         self.tyText = tk.Label(self.frame, text=self.ty, font=('Arial', 30))
 
         self.insertBtn = tk.Button(self.frame, bg='#CFDFEF', text='Insert', font=('Arial', 16))
-        self.searchBtn = tk.Button(self.frame, bg='#CFDFEF', text='Search', font=('Arial', 16))
+        self.searchBtn = tk.Button(self.frame, bg='#CFDFEF', text='Search', font=('Arial', 16), command=self.search)
         self.initializeBtn = tk.Button(self.frame, bg='#CFDFEF', text='Initialize Database', font=('Arial', 16))
     pass
 
@@ -32,5 +35,10 @@ class MainMenuGUI:
         self.searchBtn.grid(row=2, column=2, columnspan=2, sticky='e', pady=10)
         self.initializeBtn.grid(row=3, column=1, columnspan=3, sticky='news', pady=10)
         self.frame.pack()
+    pass
+
+    def search(self):
+        self.menuPage.destroy()
+        search = SearchGUI.SearchGUI(self.userName, self.password)
     pass
 
