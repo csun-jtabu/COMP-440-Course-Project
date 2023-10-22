@@ -1,11 +1,13 @@
 import tkinter as tk
 
 import SearchGUI
-
+import ErrorBoxGUI
+import DatabaseControl
 
 class MainMenuGUI:
 
     def __init__(self, userName, password):
+        self.db = DatabaseControl.DatabaseControl()
         self.userName = userName
         self.password = password
         self.menuPage = tk.Tk()
@@ -25,7 +27,7 @@ class MainMenuGUI:
 
         self.insertBtn = tk.Button(self.frame, bg='#CFDFEF', text='Insert', font=('Arial', 16))
         self.searchBtn = tk.Button(self.frame, bg='#CFDFEF', text='Search', font=('Arial', 16), command=self.search)
-        self.initializeBtn = tk.Button(self.frame, bg='#CFDFEF', text='Initialize Database', font=('Arial', 16))
+        self.initializeBtn = tk.Button(self.frame, bg='#CFDFEF', text='Initialize Database', font=('Arial', 16), command=self.initializeDB)
     pass
 
     def formatWidgets(self):
@@ -38,7 +40,15 @@ class MainMenuGUI:
     pass
 
     def search(self):
+        self.db.myCursor.close()
+        self.db.db.close()
         self.menuPage.destroy()
         search = SearchGUI.SearchGUI(self.userName, self.password)
+    pass
+
+    def initializeDB(self):
+        #successMessage = ErrorBoxGUI.ErrorBoxGUI('Success!\nDatabase Re-Initialized.\nRestarting Program.')
+        self.db.dbInitialization()
+        #newMenu = self.__init__(self.userName, self.password)
     pass
 
