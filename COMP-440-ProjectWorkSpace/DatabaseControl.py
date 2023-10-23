@@ -1,3 +1,5 @@
+import time
+
 import mysql.connector
 
 import re
@@ -126,9 +128,17 @@ class DatabaseControl:
     pass
 
     def searchByCategory(self, category):
+        sqlString = category + ',|, ' + category + '$|^' + category + '$'
         sqlStatement = ("SELECT productid, title, description, category, price FROM item "
                         "WHERE category REGEXP %s;")
-        self.myCursor.execute(sqlStatement, (category,))
+        self.myCursor.execute(sqlStatement, (sqlString,))
         searchedItems = self.myCursor.fetchall()
         return searchedItems
+    pass
+
+    def dbInitialization(self):
+        #print('Gone to MYSQL')
+        self.myCursor.callproc('reset_tables_except_user') #test / reset_tables_except_user
+        #print('Back on Python')
+        self.db.commit()
     pass

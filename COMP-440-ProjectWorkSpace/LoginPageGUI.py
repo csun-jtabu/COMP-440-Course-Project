@@ -49,6 +49,8 @@ class LoginPageGUI:
     def loggedIn(self):
         key = self.db.login(self.userNameVar.get(), self.passwordVar.get())
         if (key == True):
+            self.db.myCursor.close()
+            self.db.db.close()
             self.loginPage.destroy()
             menu = MainMenuGUI.MainMenuGUI(userName=self.userNameVar, password=self.passwordVar)
         else:
@@ -57,6 +59,8 @@ class LoginPageGUI:
     pass
 
     def signUp(self):
+        self.db.myCursor.close()
+        self.db.db.close()
         self.loginPage.destroy()
         signUp = SignUpPageGUI.SignUpPageGUI()
     pass

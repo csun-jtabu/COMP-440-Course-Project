@@ -72,6 +72,8 @@ class SignUpPageGUI:
         key = self.db.signup(self.userNameVar.get(), self.passwordVar.get(), self.passwordConfVar.get(),
                              self.firstNameVar.get(), self.lastNameVar.get(), self.emailVar.get())
         if (key == True):
+            self.db.myCursor.close()
+            self.db.db.close()
             self.signUpPage.destroy()
             login = LoginPageGUI.LoginPageGUI()
         else:
@@ -79,6 +81,8 @@ class SignUpPageGUI:
     pass
 
     def back(self):
+        self.db.myCursor.close()
+        self.db.db.close()
         self.signUpPage.destroy()
         login = LoginPageGUI.LoginPageGUI()
     pass

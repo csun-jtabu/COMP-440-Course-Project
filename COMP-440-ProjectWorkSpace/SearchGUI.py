@@ -32,6 +32,8 @@ class SearchGUI:
         self.reviewBtn = tk.Button(self.frame, bg='#CFDFEF', text='Review', font=('Arial', 16))
 
         self.table = ttk.Treeview(self.frame, columns=('ProductID','Title', 'Description', 'Category', 'Price'), show='headings')
+        self.verticalScroll = ttk.Scrollbar(self.frame, orient='vertical',command=self.table.yview)
+        self.table.configure(yscrollcommand=self.verticalScroll.set)
         self.table.heading('ProductID', text='Product ID')
         self.table.heading('Title', text='Title')
         self.table.heading('Description', text='Description')
@@ -46,6 +48,7 @@ class SearchGUI:
         self.searchBtn.grid(row=0, column=2, columnspan=1, sticky='news', pady=10)
 
         self.table.grid(row=1, column=1, columnspan=1, sticky='news', pady=10)
+        self.verticalScroll.grid(row=1, column=2, sticky='ns')
 
         self.backBtn.grid(row=2, column=0, columnspan=1, sticky='news', pady=10)
         self.seeReviewsBtn.grid(row=2, column=1, columnspan=1, sticky='news', pady=10)
