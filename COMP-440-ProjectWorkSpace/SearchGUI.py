@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import ttk
 
 import MainMenuGUI
+import SubmitReviewGUI
+import ViewReviewsGUI
 
 
 class SearchGUI:
@@ -28,8 +30,8 @@ class SearchGUI:
 
         self.searchBtn = tk.Button(self.frame, bg='#CFDFEF', text='Search', font=('Arial', 16), command=self.search)
         self.backBtn = tk.Button(self.frame, bg='#CFDFEF', text='Go Back', font=('Arial', 16), command=self.goBack)
-        self.seeReviewsBtn = tk.Button(self.frame, bg='#CFDFEF', text='See Reviews', font=('Arial', 16))
-        self.reviewBtn = tk.Button(self.frame, bg='#CFDFEF', text='Review', font=('Arial', 16))
+        self.seeReviewsBtn = tk.Button(self.frame, bg='#CFDFEF', text='See Reviews', font=('Arial', 16), command=self.viewReviews)
+        self.reviewBtn = tk.Button(self.frame, bg='#CFDFEF', text='Review', font=('Arial', 16), command=self.review)
 
         self.table = ttk.Treeview(self.frame, columns=('ProductID','Title', 'Description', 'Category', 'Price'), show='headings')
         self.verticalScroll = ttk.Scrollbar(self.frame, orient='vertical',command=self.table.yview)
@@ -85,6 +87,16 @@ class SearchGUI:
     def clearTable(self):
         for row in self.table.get_children():
             self.table.delete(row)
+    pass
+
+    def review(self):
+        self.searchPage.destroy()
+        review = SubmitReviewGUI.SubmitReviewGUI(self.userName, self.password)
+    pass
+
+    def viewReviews(self):
+        self.searchPage.destroy()
+        viewReviews = ViewReviewsGUI.ViewReviewsGUI(self.userName, self.password)
     pass
 
     def goBack(self):
