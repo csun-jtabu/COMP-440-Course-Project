@@ -25,7 +25,7 @@ class MainMenuGUI:
         self.instructText = tk.Label(self.frame, text='You Logged In!', font=('Arial', 30))
         self.tyText = tk.Label(self.frame, text=self.ty, font=('Arial', 30))
 
-        self.insertBtn = tk.Button(self.frame, bg='#CFDFEF', text='Insert', font=('Arial', 16))
+        self.insertBtn = tk.Button(self.frame, bg='#CFDFEF', text='Insert', font=('Arial', 16), command=self.insert)
         self.searchBtn = tk.Button(self.frame, bg='#CFDFEF', text='Search', font=('Arial', 16), command=self.search)
         self.initializeBtn = tk.Button(self.frame, bg='#CFDFEF', text='Initialize Database', font=('Arial', 16), command=self.initializeDB)
     pass
@@ -52,3 +52,10 @@ class MainMenuGUI:
         #newMenu = self.__init__(self.userName, self.password)
     pass
 
+    def insert(self):
+        self.db.myCursor.close()
+        self.db.db.close()
+        self.menuPage.destroy()
+        insert = InsertGUI.InsertGUI()
+
+    pass
