@@ -74,6 +74,8 @@ class ViewReviewsGUI:
     pass
 
     def goBack(self):
+        self.db.myCursor.close()
+        self.db.db.close()
         self.viewReviewsPage.destroy()
         search = SearchGUI.SearchGUI(self.userName, self.password)
     pass

@@ -1,7 +1,7 @@
 import tkinter as tk
 
+import LoginPageGUI
 import SearchGUI
-import ErrorBoxGUI
 import DatabaseControl
 import InsertGUI
 
@@ -28,7 +28,10 @@ class MainMenuGUI:
 
         self.insertBtn = tk.Button(self.frame, bg='#CFDFEF', text='Insert', font=('Arial', 16), command=self.insert)
         self.searchBtn = tk.Button(self.frame, bg='#CFDFEF', text='Search', font=('Arial', 16), command=self.search)
-        self.initializeBtn = tk.Button(self.frame, bg='#CFDFEF', text='Initialize Database', font=('Arial', 16), command=self.initializeDB)
+        self.initializeBtn = tk.Button(self.frame, bg='#CFDFEF', text='Initialize\nDatabase',
+                                       font=('Arial', 16), command=self.initializeDB)
+        self.logoutBtn = tk.Button(self.frame, bg='#F7CEE2', text='Log Out', font=('Arial', 16), command=self.logout)
+
     pass
 
     def formatWidgets(self):
@@ -36,7 +39,8 @@ class MainMenuGUI:
         self.tyText.grid(row=1, column=1, columnspan=3, sticky='news', pady=10)
         self.insertBtn.grid(row=2, column=0, columnspan=2, sticky='w', pady=10)
         self.searchBtn.grid(row=2, column=2, columnspan=2, sticky='e', pady=10)
-        self.initializeBtn.grid(row=3, column=1, columnspan=3, sticky='news', pady=10)
+        self.initializeBtn.grid(row=3, column=1, columnspan=1, sticky='w', pady=10)
+        self.logoutBtn.grid(row=3, column=2, columnspan=1, sticky='e', pady=10)
         self.frame.pack()
     pass
 
@@ -58,4 +62,11 @@ class MainMenuGUI:
         self.db.db.close()
         self.menuPage.destroy()
         insert = InsertGUI.InsertGUI(self.userName, self.password)
+    pass
+
+    def logout(self):
+        self.db.myCursor.close()
+        self.db.db.close()
+        self.menuPage.destroy()
+        login = LoginPageGUI.LoginPageGUI()
     pass
