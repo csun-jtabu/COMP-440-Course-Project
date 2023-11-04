@@ -5,6 +5,7 @@ from tkinter import ttk
 import MainMenuGUI
 import SubmitReviewGUI
 import ViewReviewsGUI
+import ErrorBoxGUI
 
 
 class SearchGUI:
@@ -99,13 +100,29 @@ class SearchGUI:
     pass
 
     def review(self):
-        self.searchPage.destroy()
-        review = SubmitReviewGUI.SubmitReviewGUI(self.userName, self.password)
-    pass
+        selectedItem = self.table.focus()
+        if selectedItem:
+            row = self.table.item(selectedItem)
+            selectedProduct = row.get("values")[0]
+            self.searchPage.destroy()
+            review = SubmitReviewGUI.SubmitReviewGUI(self.userName, self.password, selectedProduct)
+        else:
+            self.error('No product was selected. Please select a product to leave a review.')
+            pass
 
     def viewReviews(self):
-        self.searchPage.destroy()
-        viewReviews = ViewReviewsGUI.ViewReviewsGUI(self.userName, self.password)
+        selectedItem = self.table.focus()
+        if selectedItem:
+            row = self.table.item(selectedItem)
+            selectedProduct = row.get("values")[0]
+            self.searchPage.destroy()
+            viewReviews = ViewReviewsGUI.ViewReviewsGUI(self.userName, self.password, selectedProduct)
+        else:
+            self.error('No product was selected. Please select a product to view a review.')
+            pass
+
+    def error(self, text):
+        error = ErrorBoxGUI.ErrorBoxGUI(text)
     pass
 
     def goBack(self):
