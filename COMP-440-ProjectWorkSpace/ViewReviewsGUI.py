@@ -60,9 +60,9 @@ class ViewReviewsGUI:
 
     def displaySelectedProduct(self):
         oneProduct = self.db.displayProduct(self.productId)
+        # print(oneProduct)
         if oneProduct != None:
-            for values in oneProduct:
-                self.table.insert('', 'end', values=values)
+            self.table.insert('', 'end', values=(oneProduct[0], oneProduct[2], oneProduct[3], oneProduct[4], oneProduct[5]))
     pass
 
     def loadTableData(self, productId):

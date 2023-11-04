@@ -86,7 +86,7 @@ class SearchGUI:
 
     def searchTableData(self, category):
         searchItems = self.db.searchByCategory(category)
-        print(searchItems)
+        #print(searchItems)
         if searchItems != None:
             counter = 0
             for item in searchItems:
@@ -104,6 +104,8 @@ class SearchGUI:
         if selectedItem:
             row = self.table.item(selectedItem)
             selectedProduct = row.get("values")[0]
+            self.db.myCursor.close()
+            self.db.db.close()
             self.searchPage.destroy()
             review = SubmitReviewGUI.SubmitReviewGUI(self.userName, self.password, selectedProduct)
         else:
@@ -115,6 +117,8 @@ class SearchGUI:
         if selectedItem:
             row = self.table.item(selectedItem)
             selectedProduct = row.get("values")[0]
+            self.db.myCursor.close()
+            self.db.db.close()
             self.searchPage.destroy()
             viewReviews = ViewReviewsGUI.ViewReviewsGUI(self.userName, self.password, selectedProduct)
         else:
