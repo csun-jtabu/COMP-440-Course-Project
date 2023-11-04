@@ -3,6 +3,7 @@ import tkinter as tk
 import SearchGUI
 import ErrorBoxGUI
 import DatabaseControl
+import InsertGUI
 
 class MainMenuGUI:
 
@@ -52,3 +53,13 @@ class MainMenuGUI:
         #newMenu = self.__init__(self.userName, self.password)
     pass
 
+<<<<<<< Updated upstream
+=======
+    def insert(self):
+        self.db.myCursor.close()
+        self.db.db.close()
+        self.menuPage.destroy()
+        insert = InsertGUI.InsertGUI(self.userName, self.password)
+
+    pass
+>>>>>>> Stashed changes
