@@ -1,5 +1,3 @@
-import time
-
 import mysql.connector
 
 import re
@@ -163,5 +161,10 @@ class DatabaseControl:
         #print('Gone to MYSQL')
         self.myCursor.callproc('reset_tables_except_user') #test / reset_tables_except_user
         #print('Back on Python')
+        self.db.commit()
+    pass
+
+    def insertItem(self, userName, title, description, category, price):
+        self.myCursor.callproc('insert_item_procedure', [userName, title, description, category, price])
         self.db.commit()
     pass

@@ -126,6 +126,8 @@ class SearchGUI:
     pass
 
     def goBack(self):
+        self.db.myCursor.close()
+        self.db.db.close()
         self.searchPage.destroy()
         menu = MainMenuGUI.MainMenuGUI(self.userName, self.password)
     pass
