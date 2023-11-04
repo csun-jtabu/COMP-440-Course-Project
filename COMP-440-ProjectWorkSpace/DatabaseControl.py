@@ -134,6 +134,29 @@ class DatabaseControl:
         return searchedItems
     pass
 
+    def displayProduct(self, productId):
+        sqlStatement = "SELECT * FROM item WHERE productid = %s"
+        self.myCursor.execute(sqlStatement, (productId,))
+        currentProduct = self.myCursor.fetchone()
+        return currentProduct
+    pass
+
+    '''
+    def submitReview(self, productId, userName, rating, description, date):
+        sqlStatement = ("INSERT INTO review VALUES(%s, %s, %s, %s, %s);")
+        reviewInfo = (productId, userName, rating, description, date)
+        self.myCursor.execute(sqlStatement, reviewInfo)
+        self.db.commit()
+    pass
+    '''
+
+    def loadReviewData(self, productId):
+        sqlStatement = "SELECT user_reviewed, rating, description FROM review WHERE productid = %s"
+        self.myCursor.execute(sqlStatement, (productId,))
+        allItems = self.myCursor.fetchall()
+        return allItems
+    pass
+
     def dbInitialization(self):
         #print('Gone to MYSQL')
         self.myCursor.callproc('reset_tables_except_user') #test / reset_tables_except_user
