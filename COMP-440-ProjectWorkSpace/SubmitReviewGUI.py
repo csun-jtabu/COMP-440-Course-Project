@@ -1,13 +1,16 @@
 import DatabaseControl
 import tkinter as tk
 from tkinter import ttk
+from datetime import date
 
 import SearchGUI
+import ViewReviewsGUI
 
 class SubmitReviewGUI:
-	def __init__(self, userName, password):
+	def __init__(self, userName, password, productId):
 		self.userName = userName
 		self.password = password
+		self.productId = productId
 		self.db = DatabaseControl.DatabaseControl()
 		self.submitReviewPage = tk.Tk()
 		self.submitReviewPage.geometry('1500x520')
@@ -37,6 +40,7 @@ class SubmitReviewGUI:
 		self.table.heading('Description', text='Description')
 		self.table.heading('Category', text='Category')
 		self.table.heading('Price', text='Price')
+		self.displaySelectedProduct()
 	pass
 
 	def formatWidgets(self):
@@ -54,9 +58,24 @@ class SubmitReviewGUI:
 		self.frame.pack()
 	pass
 
+	def displaySelectedProduct(self):
+		oneProduct = self.db.displayProduct(self.productId)
+		if oneProduct != None:
+			for values in oneProduct:
+				self.table.insert('', 'end', values=values)
+	pass
+
+	'''
+	def submit(self):
+		today = date.today()
+		info = self.db.submitReview(self.productId, self.userName, self.ratingCombobox.get(), self.descriptionEntry.get('1.0', 'end-1c'), today)
+		self.submitReviewPage.destroy()
+		viewReviews = ViewReviewsGUI.ViewReviewsGUI(self.userName, self.password, self.productId)
+	pass
+	'''
+
 	def goBack(self):
 		self.submitReviewPage.destroy()
 		search = SearchGUI.SearchGUI(self.userName, self.password)
 	pass
-
 pass

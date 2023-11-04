@@ -5,10 +5,11 @@ from tkinter import ttk
 import SearchGUI
 
 class ViewReviewsGUI:
-    def __init__(self, userName, password):
+    def __init__(self, userName, password, productId):
         self.userName = userName
         self.userName = userName
         self.password = password
+        self.productId = productId
         self.db = DatabaseControl.DatabaseControl()
         self.viewReviewsPage = tk.Tk()
         self.viewReviewsPage.geometry('1500x520')
@@ -34,10 +35,12 @@ class ViewReviewsGUI:
         self.table.heading('Description', text='Description')
         self.table.heading('Category', text='Category')
         self.table.heading('Price', text='Price')
+        self.displaySelectedProduct()
 
         self.reviewsTable.heading('Author', text='Author')
         self.reviewsTable.heading('Rating', text='Rating')
         self.reviewsTable.heading('Description', text='Description')
+        self.loadTableData(self.productId)
     pass
 
     def formatWidgets(self):
@@ -53,6 +56,21 @@ class ViewReviewsGUI:
         self.scrollbar.config(command=self.reviewsTable.yview)
 
         self.frame.pack()
+    pass
+
+    def displaySelectedProduct(self):
+        oneProduct = self.db.displayProduct(self.productId)
+        if oneProduct != None:
+            for values in oneProduct:
+                self.table.insert('', 'end', values=values)
+    pass
+
+    def loadTableData(self, productId):
+        allItems = self.db.loadReviewData(productId)
+        counter = 0
+        for item in allItems:
+            self.reviewsTable.insert(parent='', index=counter, values=(item[0], item[1], item[2]))
+            counter = counter + 1
     pass
 
     def goBack(self):
