@@ -109,7 +109,7 @@ class SearchGUI:
             self.searchPage.destroy()
             review = SubmitReviewGUI.SubmitReviewGUI(self.userName, self.password, selectedProduct)
         else:
-            self.error('No product was selected. Please select a product to leave a review.')
+            self.error('No product was selected. \nPlease select a product to leave a review.')
             pass
 
     def viewReviews(self):
@@ -122,7 +122,7 @@ class SearchGUI:
             self.searchPage.destroy()
             viewReviews = ViewReviewsGUI.ViewReviewsGUI(self.userName, self.password, selectedProduct)
         else:
-            self.error('No product was selected. Please select a product to view a review.')
+            self.error('No product was selected. \nPlease select a product to view a review.')
             pass
 
     def error(self, text):
