@@ -1,10 +1,10 @@
 import DatabaseControl
 import tkinter as tk
 from tkinter import ttk
-from datetime import date
 
 import SearchGUI
 import ViewReviewsGUI
+import ErrorBoxGUI
 
 class SubmitReviewGUI:
 	def __init__(self, userName, password, productId):
@@ -30,7 +30,7 @@ class SubmitReviewGUI:
 		self.ratingLabel = tk.Label(self.reviewDetailsFrame, text="Rating", font=('Arial', 16))
 		self.descriptionLabel = tk.Label(self.reviewDetailsFrame, text="Description", font=('Arial', 16))
 		self.cancelButton = tk.Button(self.reviewDetailsFrame, text="Cancel", bg='#CFDFEF', font=('Arial', 16), command=self.goBack)
-		self.submitButton = tk.Button(self.reviewDetailsFrame, text="Submit", bg='#CFDFEF', font=('Arial', 16))
+		self.submitButton = tk.Button(self.reviewDetailsFrame, text="Submit", bg='#CFDFEF', font=('Arial', 16), command=self.submit)
 		self.ratingCombobox = ttk.Combobox(self.reviewDetailsFrame, values=["Excellent", "Good", "Fair", "Poor"], font=('Arial', 16))
 		self.ratingCombobox.insert(0, "Select a Rating")
 		self.descriptionEntry = tk.Text(self.reviewDetailsFrame, width=50, height=4, font=('Arial', 16))
@@ -65,14 +65,13 @@ class SubmitReviewGUI:
 			self.table.insert('', 'end', values=(oneProduct[0], oneProduct[2], oneProduct[3], oneProduct[4], oneProduct[5]))
 	pass
 
-	'''
 	def submit(self):
-		today = date.today()
-		info = self.db.submitReview(self.productId, self.userName, self.ratingCombobox.get(), self.descriptionEntry.get('1.0', 'end-1c'), today)
+		self.db.submitReview(self.productId, self.userName.get(), self.ratingCombobox.get(), self.descriptionEntry.get("1.0", "end-1c"))
+		self.db.myCursor.close()
+		self.db.db.close()
 		self.submitReviewPage.destroy()
 		viewReviews = ViewReviewsGUI.ViewReviewsGUI(self.userName, self.password, self.productId)
 	pass
-	'''
 
 	def goBack(self):
 		self.db.myCursor.close()

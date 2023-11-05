@@ -141,14 +141,10 @@ class DatabaseControl:
         return currentProduct
     pass
 
-    '''
-    def submitReview(self, productId, userName, rating, description, date):
-        sqlStatement = ("INSERT INTO review VALUES(%s, %s, %s, %s, %s);")
-        reviewInfo = (productId, userName, rating, description, date)
-        self.myCursor.execute(sqlStatement, reviewInfo)
+    def submitReview(self, productId, userName, rating, description):
+        self.myCursor.callproc('write_review', [productId, userName, rating, description])
         self.db.commit()
     pass
-    '''
 
     def loadReviewData(self, productId):
         sqlStatement = "SELECT user_reviewed, rating, description FROM review WHERE productid = %s"
