@@ -66,19 +66,22 @@ class SubmitReviewGUI:
 	pass
 
 	def submit(self):
-		checkForReview = self.db.checkNumUserReview(self.userName, self.productId)
-		checkForSelfReview = self.db.checkSelfReview(self.userName, self.productId)
-		if(checkForReview == True):
-			if(checkForSelfReview == True):
-				self.db.submitReview(self.productId, self.userName, self.ratingCombobox.get(), self.descriptionEntry.get("1.0", "end-1c"))
-				self.db.myCursor.close()
-				self.db.db.close()
-				self.submitReviewPage.destroy()
-				viewReviews = ViewReviewsGUI.ViewReviewsGUI(self.userName, self.password, self.productId)
-			else:
-				ErrorBoxGUI.ErrorBoxGUI('You can\'t review a product you posted.')
+		if (self.ratingCombobox.get() == "" or self.ratingCombobox.get() == "Select a Rating" or self.descriptionEntry.get("1.0", "end-1c") == ""):
+			ErrorBoxGUI.ErrorBoxGUI('You have to select a rating and \nadd a description to leave a review.')
 		else:
-			ErrorBoxGUI.ErrorBoxGUI('You already inserted a review for this product. \nYou can only insert one review per product.')
+			checkForReview = self.db.checkNumUserReview(self.userName, self.productId)
+			checkForSelfReview = self.db.checkSelfReview(self.userName, self.productId)
+			if(checkForReview == True):
+				if(checkForSelfReview == True):
+					self.db.submitReview(self.productId, self.userName, self.ratingCombobox.get(), self.descriptionEntry.get("1.0", "end-1c"))
+					self.db.myCursor.close()
+					self.db.db.close()
+					self.submitReviewPage.destroy()
+					viewReviews = ViewReviewsGUI.ViewReviewsGUI(self.userName, self.password, self.productId)
+				else:
+					ErrorBoxGUI.ErrorBoxGUI('You can\'t review a product you posted.')
+			else:
+				ErrorBoxGUI.ErrorBoxGUI('You already inserted a review for this product. \nYou can only insert one review per product.')
 	pass
 
 	def goBack(self):
