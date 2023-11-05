@@ -4,7 +4,6 @@ import MainMenuGUI
 
 class InsertGUI:
     def __init__(self, userName, password):
-
         self.userName = userName
         self.password = password
         self.db = DatabaseControl.DatabaseControl()
@@ -14,6 +13,7 @@ class InsertGUI:
         self.createWidgets()
         self.formatWidgets()
         self.root.mainloop()
+    pass
 
     def createWidgets(self):
         self.titleVar = tk.StringVar()
@@ -56,8 +56,12 @@ class InsertGUI:
     pass
 
     def insert_item(self):
-        self.db.insertItem(self.userName.get(), self.titleVar.get(),
+        self.db.insertItem(self.userName, self.titleVar.get(),
                            self.descriptionVar.get(), self.categoryVar.get(), self.priceVar.get())
+        self.db.myCursor.close()
+        self.db.db.close()
+        self.root.destroy()
+        menu = MainMenuGUI.MainMenuGUI(self.userName, self.password)
     pass
 
     def goBack(self):

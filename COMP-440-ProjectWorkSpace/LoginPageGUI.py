@@ -52,7 +52,7 @@ class LoginPageGUI:
             self.db.myCursor.close()
             self.db.db.close()
             self.loginPage.destroy()
-            menu = MainMenuGUI.MainMenuGUI(userName=self.userNameVar, password=self.passwordVar)
+            menu = MainMenuGUI.MainMenuGUI(userName=self.userNameVar.get(), password=self.passwordVar.get())
         else:
             self.error('Username/Password Combination Invalid')
             #self.db.printAllUsers()

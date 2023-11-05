@@ -30,9 +30,9 @@ BEGIN
 		FOREIGN KEY(user_reviewed) REFERENCES user(username));
 	INSERT INTO review(productid, user_reviewed, rating, description, date_reviewed) 
     VALUES
-		(1, 'jaz', 'excellent', 'cool phone', CURDATE()),
-		(2, 'jaz', 'good', 'cool tablet', CURDATE()),
-		(3, 'jaz', 'fair', 'ok laptop', CURDATE()),
-		(4, 'jaz', 'poor', 'bad phone', CURDATE()),
-		(5, 'jaz', 'fair', 'ok tablet', CURDATE());
-END;
+		(1, 'jaz', 'Excellent', 'cool phone', CURDATE()),
+		(2, 'jaz', 'Good', 'cool tablet', CURDATE()),
+		(3, 'jaz', 'Fair', 'ok laptop', CURDATE()),
+		(4, 'jaz', 'Poor', 'bad phone', CURDATE()),
+		(5, 'jaz', 'Fair', 'ok tablet', CURDATE());
+END

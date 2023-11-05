@@ -7,7 +7,6 @@ import SearchGUI
 class ViewReviewsGUI:
     def __init__(self, userName, password, productId):
         self.userName = userName
-        self.userName = userName
         self.password = password
         self.productId = productId
         self.db = DatabaseControl.DatabaseControl()

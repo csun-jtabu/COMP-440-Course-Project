@@ -26,7 +26,7 @@ class DatabaseControl:
         # this will get everyone in our user database and their information
         self.myCursor.execute(
             'SELECT * '
-            'FROM user')
+            'FROM user;')
         # this will save the tuple data results from the query above into a list
         self.users = self.myCursor.fetchall()
     pass
@@ -42,7 +42,7 @@ class DatabaseControl:
 
     def login(self, userName, password):
         validity = False
-        sqlStatement = "SELECT * FROM user WHERE username = %s"
+        sqlStatement = "SELECT * FROM user WHERE username = %s;"
         self.myCursor.execute(sqlStatement, (userName,))
         currentAccount = self.myCursor.fetchone()
         if currentAccount != None:
@@ -91,7 +91,7 @@ class DatabaseControl:
     def validEmail(self, email):
         valid = False
         validEmailLength = 254
-        sqlStatement = "SELECT * FROM user WHERE email = %s"
+        sqlStatement = "SELECT * FROM user WHERE email = %s;"
         self.myCursor.execute(sqlStatement, (email,))
         selectedEmail = self.myCursor.fetchone()
         pattern = "^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9_\.\-]+\.[a-zA-Z]{2,7}$"
@@ -107,7 +107,7 @@ class DatabaseControl:
     def validUserName(self, userName):
         valid = False
         validUserNameLength = 15
-        sqlStatement = "SELECT * FROM user WHERE username = %s"
+        sqlStatement = "SELECT * FROM user WHERE username = %s;"
         self.myCursor.execute(sqlStatement, (userName,))
         selectedName = self.myCursor.fetchone()
         if selectedName == None:
@@ -135,19 +135,19 @@ class DatabaseControl:
     pass
 
     def displayProduct(self, productId):
-        sqlStatement = "SELECT * FROM item WHERE productid = %s"
+        sqlStatement = "SELECT * FROM item WHERE productid = %s;"
         self.myCursor.execute(sqlStatement, (productId,))
         currentProduct = self.myCursor.fetchone()
         return currentProduct
     pass
 
     def submitReview(self, productId, userName, rating, description):
-        self.myCursor.callproc('write_review', [productId, userName, rating, description])
+        self.myCursor.callproc('write_review', (productId, userName, rating, description))
         self.db.commit()
     pass
 
     def loadReviewData(self, productId):
-        sqlStatement = "SELECT user_reviewed, rating, description FROM review WHERE productid = %s"
+        sqlStatement = "SELECT user_reviewed, rating, description FROM review WHERE productid = %s;"
         self.myCursor.execute(sqlStatement, (productId,))
         allItems = self.myCursor.fetchall()
         return allItems
@@ -161,6 +161,27 @@ class DatabaseControl:
     pass
 
     def insertItem(self, userName, title, description, category, price):
-        self.myCursor.callproc('insert_item_procedure', [userName, title, description, category, price])
+        self.myCursor.callproc('insert_item_procedure', (userName, title, description, category, price))
         self.db.commit()
+    pass
+
+    # this will ensure that there will be only one review per product for each member
+    def checkNumUserReview(self, userName, productId):
+        sqlStatement = "SELECT count(*) FROM review WHERE user_reviewed = %s AND productid = %s;"
+        self.myCursor.execute(sqlStatement, (userName, productId))
+        numUserReviews = self.myCursor.fetchone()
+        if(numUserReviews[0] < 1):
+            return True
+        else:
+            return False
+    pass
+
+    def checkSelfReview(self, userName, productId):
+        sqlStatement = "SELECT count(*) FROM item WHERE productid = %s AND user_inserted = %s;"
+        self.myCursor.execute(sqlStatement, (productId, userName))
+        selfReviews = self.myCursor.fetchone()
+        if(selfReviews[0] == 0):
+            return True
+        else:
+            return False
     pass

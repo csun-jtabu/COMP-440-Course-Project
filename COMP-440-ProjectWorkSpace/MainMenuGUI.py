@@ -21,7 +21,7 @@ class MainMenuGUI:
 
     def createWidgets(self):
         self.ty = tk.Label()
-        self.ty = 'Thank you ' + self.userName.get()
+        self.ty = 'Thank you ' + self.userName
         self.frame = tk.Frame()  # frame holds all the widgets in the page
         self.instructText = tk.Label(self.frame, text='You Logged In!', font=('Arial', 30))
         self.tyText = tk.Label(self.frame, text=self.ty, font=('Arial', 30))
