@@ -23,6 +23,7 @@ class SearchGUI:
 
     def createWidgets(self):
         self.catSearch = tk.StringVar()
+        self.checkBoxVar = tk.IntVar()
 
         self.frame = tk.Frame()
         self.searchText = tk.Label(self.frame, text='Search a product\n by Category: ', font=('Arial', 16))
@@ -33,6 +34,7 @@ class SearchGUI:
         self.backBtn = tk.Button(self.frame, bg='#CFDFEF', text='Go Back', font=('Arial', 16), command=self.goBack, width=8)
         self.seeReviewsBtn = tk.Button(self.frame, bg='#CFDFEF', text='See Reviews', font=('Arial', 16), command=self.viewReviews, width=10)
         self.reviewBtn = tk.Button(self.frame, bg='#CFDFEF', text='Review', font=('Arial', 16), command=self.review, width=8)
+        self.maxPriceBox = tk.Checkbutton(self.frame, text='Max By Category', variable=self.checkBoxVar, onvalue=1, offvalue=0, command=self.findMaxByCat)
 
         self.table = ttk.Treeview(self.frame, columns=('ProductID','Title', 'Description', 'Category', 'Price'), show='headings')
         self.verticalScroll = ttk.Scrollbar(self.frame, orient='vertical',command=self.table.yview)
@@ -65,7 +67,7 @@ class SearchGUI:
         self.backBtn.grid(row=3, column=1, columnspan=1, sticky='w', pady=10, padx=10)
         self.seeReviewsBtn.grid(row=3, column=1, columnspan=1, pady=10, padx=10)
         self.reviewBtn.grid(row=3, column=1, columnspan=1, sticky='e', pady=10, padx=10)
-
+        self.maxPriceBox.grid(row=4, column=1, columnspan=1, sticky='e', pady=10, padx=10)
 
         self.frame.pack()
     pass
@@ -80,8 +82,18 @@ class SearchGUI:
 
     def search(self):
         self.clearTable()
-        category = self.catSearch.get()
-        self.searchTableData(category)
+        self.checkBoxVar.set(0)
+        self.category = self.catSearch.get()
+        self.searchTableData(self.category)
+    pass
+
+    def findMaxByCat(self):
+        self.clearTable()
+        #category = self.catSearch.get()
+        if self.checkBoxVar.get() == 1:
+            self.displayMaxByCategory(self.category)
+        else:
+            self.searchTableData(self.category)
     pass
 
     def searchTableData(self, category):
@@ -134,6 +146,16 @@ class SearchGUI:
         self.db.db.close()
         self.searchPage.destroy()
         menu = MainMenuGUI.MainMenuGUI(self.userName, self.password)
+    pass
+
+    def displayMaxByCategory(self, category):
+        print('in search gui max')
+        maxItems = self.db.mostExpensiveByCategory(category)
+        if maxItems != None:
+            counter = 0
+            for item in maxItems:
+                self.table.insert(parent='', index=counter, values=(item[0], item[1], item[2], item[3], item[4]))
+                counter = counter + 1
     pass
 
 pass

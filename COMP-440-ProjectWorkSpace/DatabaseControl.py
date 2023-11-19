@@ -134,6 +134,23 @@ class DatabaseControl:
         return searchedItems
     pass
 
+    def mostExpensiveByCategory(self, category):
+        searchedItems = self.searchByCategory(category)
+        if searchedItems != []:
+            mostExpensive = [searchedItems[0]]
+            for item in searchedItems:
+                print(mostExpensive)
+                if mostExpensive[0][4] < item[4]:
+                    mostExpensive.clear()
+                    mostExpensive = [item]
+                elif (mostExpensive[0][4] == item[4]) and (item not in mostExpensive):
+                    mostExpensive.append(item)
+
+            return mostExpensive
+        else:
+            return None
+    pass
+
     def displayProduct(self, productId):
         sqlStatement = "SELECT * FROM item WHERE productid = %s;"
         self.myCursor.execute(sqlStatement, (productId,))
@@ -184,4 +201,49 @@ class DatabaseControl:
             return True
         else:
             return False
+    pass
+
+    def phase3Part2(self, cat1, cat2):
+        sqlString1 = cat1 + ',|, ' + cat1 + '$|^' + cat1 + '$'
+        sqlString2 = cat2 + ',|, ' + cat2 + '$|^' + cat2 + '$'
+        sqlStatement = ("SELECT user_inserted, date_inserted "
+                        "FROM item "
+                        "WHERE (category REGEXP %s) AND NOT (category REGEXP %s) "
+                        "GROUP BY date_inserted, user_inserted;")
+        self.myCursor.execute(sqlStatement, (sqlString1, sqlString2,))
+        cat1UserList = self.myCursor.fetchall()
+        sqlStatement = ("SELECT user_inserted, date_inserted "
+                        "FROM item "
+                        "WHERE (category REGEXP %s) AND NOT (category REGEXP %s) "
+                        "GROUP BY date_inserted, user_inserted;")
+        self.myCursor.execute(sqlStatement, (sqlString2, sqlString1,))
+        cat2UserList = self.myCursor.fetchall()
+        finalUsers = self.checkLists(cat1UserList, cat2UserList)
+        finalUsers = self.getUserInfoTemplate(finalUsers)
+        return finalUsers
+    pass
+
+    # this method will compare two lists and return a list of common elements
+    # we need this for phase 3
+    def checkLists(self, List1, List2):
+        newList = []
+        if (List1 != []) and (List1 != []):
+            for element in List1:
+                if element in List2:
+                    newList.append(element)
+        return newList
+    pass
+
+    # so we can output data onto userTableGUITemplate properly
+    def getUserInfoTemplate(self, userList):
+        newList = []
+        sqlStatement = ("SELECT * "
+                        "FROM user "
+                        "WHERE username = %s;")
+        if userList != []:
+            for element in userList:
+                self.myCursor.execute(sqlStatement, (element[0],))
+                newElement = self.myCursor.fetchone()
+                newList.append(newElement)
+        return newList
     pass
