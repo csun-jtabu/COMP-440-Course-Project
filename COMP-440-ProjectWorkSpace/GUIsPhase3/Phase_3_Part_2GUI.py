@@ -53,9 +53,11 @@ class Phase_3_Part2:
 
     def search(self):
         self.generatedList = self.db.phase3Part2(self.cat1.get(), self.cat2.get())
+        print(self.generatedList)
         self.db.myCursor.close()
         self.db.db.close()
         self.searchPage.destroy()
         headingName = 'Users who posted 2 different items same day'
         table = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+        #table.extraInfo('')
     pass

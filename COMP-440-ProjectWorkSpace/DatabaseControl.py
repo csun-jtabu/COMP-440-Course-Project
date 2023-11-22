@@ -119,7 +119,7 @@ class DatabaseControl:
     pass
 
     def loadItemData(self):
-        sqlStatement = "SELECT productid, title, description, category, price FROM item;"
+        sqlStatement = "SELECT productid, user_inserted, title, description, category, price, date_inserted FROM item;"
         self.myCursor.execute(sqlStatement)
         allItems = self.myCursor.fetchall()
         return allItems
@@ -127,7 +127,7 @@ class DatabaseControl:
 
     def searchByCategory(self, category):
         sqlString = category + ',|, ' + category + '$|^' + category + '$'
-        sqlStatement = ("SELECT productid, title, description, category, price FROM item "
+        sqlStatement = ("SELECT productid, user_inserted, title, description, category, price, date_inserted FROM item "
                         "WHERE category REGEXP %s;")
         self.myCursor.execute(sqlStatement, (sqlString,))
         searchedItems = self.myCursor.fetchall()
@@ -140,10 +140,10 @@ class DatabaseControl:
             mostExpensive = [searchedItems[0]]
             for item in searchedItems:
                 print(mostExpensive)
-                if mostExpensive[0][4] < item[4]:
+                if mostExpensive[0][5] < item[5]:
                     mostExpensive.clear()
                     mostExpensive = [item]
-                elif (mostExpensive[0][4] == item[4]) and (item not in mostExpensive):
+                elif (mostExpensive[0][5] == item[5]) and (item not in mostExpensive):
                     mostExpensive.append(item)
 
             return mostExpensive
@@ -246,4 +246,46 @@ class DatabaseControl:
                 newElement = self.myCursor.fetchone()
                 newList.append(newElement)
         return newList
+    pass
+
+    def loadUserDropDownMenu(self):
+        sqlStatement = ("SELECT username "
+                        "FROM user;")
+        self.myCursor.execute(sqlStatement)
+        userList = self.myCursor.fetchall()
+        return userList
+    pass
+
+    def phase3Part3(self, userX):
+        self.myCursor.execute('CALL phase3_part3(%s)', (userX,))
+        #self.myCursor.callproc('phase3_part3', (userX,))
+        itemList = self.myCursor.fetchall()
+        print(itemList)
+        return itemList
+    pass
+
+    def phase3Part4(self, date):
+        self.myCursor.execute('CALL phase3_part4(%s)', (date,))
+        # self.myCursor.callproc('phase3_part3', (userX,))
+        itemList = self.myCursor.fetchall()
+        print(itemList)
+        return itemList
+    pass
+
+    def addToFavoritesTable(self, user, favoritedUser):
+        self.myCursor.execute('CALL insert_favorited_author(%s, %s)', (user, favoritedUser,))
+        self.db.commit()
+    pass
+
+    def deleteFromFavoritesTable(self, user, favoritedUser):
+        self.myCursor.execute('CALL delete_favorited_author(%s, %s)', (user, favoritedUser,))
+        self.db.commit()
+    pass
+
+    def phase3Part5(self, user1, user2):
+        self.myCursor.execute('CALL phase3_part5(%s, %s)', (user1, user2))
+        # self.myCursor.callproc('phase3_part3', (userX,))
+        itemList = self.myCursor.fetchall()
+        print(itemList)
+        return itemList
     pass

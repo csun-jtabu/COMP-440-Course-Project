@@ -1,5 +1,6 @@
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_tables_except_user`()
 BEGIN
+	DROP TABLE IF EXISTS favorite;
 	DROP TABLE IF EXISTS review;
 	DROP TABLE IF EXISTS item;
 	CREATE TABLE item(
@@ -16,10 +17,10 @@ BEGIN
 	INSERT INTO item(productid, user_inserted, title, description, category, price, date_inserted) 
     VALUES
 		(DEFAULT,'jaz','Smartphone','This is the new iPhone X','electronic, cellphone, apple',1000,CURDATE()),
-		(DEFAULT,'jaz','Laptop','This is the new Mac','electronic, computer, apple',1500,CURDATE()),
-		(DEFAULT,'jaz','Tablet','This is the new iPad','electronic, Tablet, apple',1100,CURDATE()),
-		(DEFAULT,'jaz','Smartphone','This is the new Galaxy S23','electronic, cellphone, samsung',800,CURDATE()),
-		(DEFAULT,'jaz','Tablet','This is the new Galaxy Tab S9','electronic, Tablet, samsung',1000,CURDATE());
+		(DEFAULT,'adr','Laptop','This is the new Mac','electronic, computer, apple',1500,CURDATE()),
+		(DEFAULT,'yan','Tablet','This is the new iPad','electronic, Tablet, apple',1100,CURDATE()),
+		(DEFAULT,'mah','Smartphone','This is the new Galaxy S23','electronic, cellphone, samsung',800,CURDATE()),
+		(DEFAULT,'test1','Tablet','This is the new Galaxy Tab S9','electronic, Tablet, samsung',1000,CURDATE());
 	CREATE TABLE review(
 		productid INT,
 		user_reviewed VARCHAR(15),
@@ -30,9 +31,22 @@ BEGIN
 		FOREIGN KEY(user_reviewed) REFERENCES user(username));
 	INSERT INTO review(productid, user_reviewed, rating, description, date_reviewed) 
     VALUES
-		(1, 'jaz', 'Excellent', 'cool phone', CURDATE()),
+		(1, 'adr', 'Excellent', 'cool phone', CURDATE()),
 		(2, 'jaz', 'Good', 'cool tablet', CURDATE()),
-		(3, 'jaz', 'Fair', 'ok laptop', CURDATE()),
-		(4, 'jaz', 'Poor', 'bad phone', CURDATE()),
-		(5, 'jaz', 'Fair', 'ok tablet', CURDATE());
+		(3, 'test1', 'Fair', 'ok laptop', CURDATE()),
+		(4, 'yan', 'Poor', 'bad phone', CURDATE()),
+		(5, 'mah', 'Fair', 'ok tablet', CURDATE());
+	CREATE TABLE favorite(
+		username VARCHAR(15),
+		favorited_user VARCHAR(15),
+		FOREIGN KEY(username) REFERENCES user(username),
+		FOREIGN KEY(favorited_user) REFERENCES user(username),
+        PRIMARY KEY(username, favorited_user));
+	INSERT INTO favorite(username, favorited_user) 
+    VALUES
+		('jaz', 'yan'),
+		('yan', 'adr'),
+		('adr', 'mah'),
+		('mah', 'test1'),
+		('test1', 'jaz');
 END

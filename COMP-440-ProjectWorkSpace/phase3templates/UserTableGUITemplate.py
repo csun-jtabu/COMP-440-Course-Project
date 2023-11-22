@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import DatabaseControl
+import ErrorBoxGUI
 import MainMenuGUI
 
 

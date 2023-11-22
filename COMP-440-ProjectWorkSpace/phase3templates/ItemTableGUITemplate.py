@@ -5,24 +5,25 @@ import MainMenuGUI
 
 
 class ItemTableGUITemplate:
-    def __init__(self, userName, password, itemList):
+    def __init__(self, userName, password, itemList, heading):
         self.userName = userName
         self.password = password
         self.itemList = itemList
+        self.headingName = heading
         self.db = DatabaseControl.DatabaseControl()
         self.itemTableGUI = tk.Tk()
         self.itemTableGUI.geometry('800x500')  # 1500
         self.itemTableGUI.title('Item')
         self.createWidgets()
         self.formatWidgets()
+        self.loadTableData()
         self.itemTableGUI.mainloop()
     pass
 
     def createWidgets(self):
         self.frame = tk.Frame()
 
-        self.backBtn = tk.Button(self.frame, bg='#CFDFEF', text='Go Back', font=('Arial', 16), command=self.goBack,
-                                 width=8)
+        self.heading = tk.Label(self.frame, text=self.headingName, font=('Arial', 16))
 
         self.table = ttk.Treeview(self.frame, columns=('productId', 'user', 'title', 'description', 'category', 'price', 'date'),
                                   show='headings')
@@ -31,13 +32,16 @@ class ItemTableGUITemplate:
         self.table.configure(yscrollcommand=self.verticalScroll.set)
         self.table.configure(xscrollcommand=self.horizontalScroll.set)
 
-        self.table.column('productId', width=15)
-        self.table.column('user', width=15)
-        self.table.column('title', width=15)
-        self.table.column('description', width=15)
-        self.table.column('category', width=15)
-        self.table.column('price', width=15)
-        self.table.column('date', width=15)
+        self.backBtn = tk.Button(self.frame, bg='#CFDFEF', text='Go Back', font=('Arial', 16), command=self.goBack,
+                                 width=8)
+
+        self.table.column('productId', width=150)
+        self.table.column('user', width=150)
+        self.table.column('title', width=150)
+        self.table.column('description', width=150)
+        self.table.column('category', width=150)
+        self.table.column('price', width=150)
+        self.table.column('date', width=150)
         self.table.heading('productId', text='Product ID')
         self.table.heading('user', text='User')
         self.table.heading('title', text='Title')
@@ -49,6 +53,7 @@ class ItemTableGUITemplate:
     pass
 
     def formatWidgets(self):
+        self.heading.grid(row=0, column=1, columnspan=1, sticky='news', pady=10)
         self.table.grid(row=1, column=1, columnspan=1, sticky='news', pady=10)
         self.verticalScroll.grid(row=1, column=2, sticky='ns')
         self.horizontalScroll.grid(row=2, column=1, sticky='we')
