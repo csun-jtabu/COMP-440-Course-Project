@@ -7,6 +7,9 @@ from GUIsPhase3 import Phase_3_Part_2GUI
 from GUIsPhase3 import Phase_3_Part_3GUI
 from GUIsPhase3 import Phase_3_Part_4GUI
 from GUIsPhase3 import Phase_3_Part_5GUI
+from phase3templates import UserTableGUITemplate
+from GUIsPhase3 import Phase_3_Part_10GUI
+
 
 class MainMenuGUI:
 
@@ -40,11 +43,11 @@ class MainMenuGUI:
         self.part3Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-3', font=('Arial', 16), command=self.phase3Part3)
         self.part4Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-4', font=('Arial', 16), command=self.phase3Part4)
         self.part5Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-5', font=('Arial', 16), command=self.phase3Part5)
-        self.part6Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-6', font=('Arial', 16), command=self.phase3Part2)
-        self.part7Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-7', font=('Arial', 16), command=self.phase3Part2)
-        self.part8Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-8', font=('Arial', 16), command=self.phase3Part2)
-        self.part9Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-9', font=('Arial', 16), command=self.phase3Part2)
-        self.part10Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-10', font=('Arial', 16), command=self.phase3Part2)
+        self.part6Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-6', font=('Arial', 16), command=self.phase3Part6)
+        self.part7Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-7', font=('Arial', 16), command=self.phase3Part7)
+        self.part8Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-8', font=('Arial', 16), command=self.phase3Part8)
+        self.part9Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-9', font=('Arial', 16), command=self.phase3Part9)
+        self.part10Btn = tk.Button(self.frame, bg='#CFDFEF', text='Phase-3-10', font=('Arial', 16), command=self.phase3Part10)
 
     pass
 
@@ -120,5 +123,50 @@ class MainMenuGUI:
         self.db.myCursor.close()
         self.db.db.close()
         self.menuPage.destroy()
-        part4 = Phase_3_Part_5GUI.Phase_3_Part5(self.userName, self.password)
+        part5 = Phase_3_Part_5GUI.Phase_3_Part5(self.userName, self.password)
+    pass
+
+    def phase3Part6(self):
+        self.generatedList = self.db.phase3Part6()
+        self.db.myCursor.close()
+        self.db.db.close()
+        self.menuPage.destroy()
+        headingName = 'Users who never posted excellent items (items with at least 3 excellent reviews)'
+        part6 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+    pass
+
+    def phase3Part7(self):
+        self.generatedList = self.db.phase3Part7()
+        self.db.myCursor.close()
+        self.db.db.close()
+        self.menuPage.destroy()
+        headingName = 'All the users who never posted a poor review'
+        part7 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+    pass
+
+    def phase3Part8(self):
+        self.generatedList = self.db.phase3Part8()
+        self.db.myCursor.close()
+        self.db.db.close()
+        self.menuPage.destroy()
+        headingName = 'All the users who posted reviews, but each of their reviews is poor'
+        part8 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+    pass
+
+    def phase3Part9(self):
+        self.generatedList = self.db.phase3Part9()
+        self.db.myCursor.close()
+        self.db.db.close()
+        self.menuPage.destroy()
+        headingName = 'All users such that each item they posted so far never received any poor review'
+        part9 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+    pass
+
+    def phase3Part10(self):
+        self.generatedList = self.db.phase3Part10()
+        self.db.myCursor.close()
+        self.db.db.close()
+        self.menuPage.destroy()
+        headingName = 'User pair(A,B) such that they always gave each other excellent reviews for every single item'
+        part10 = Phase_3_Part_10GUI.Phase_3_Part10(self.userName, self.password, self.generatedList, headingName)
     pass

@@ -289,3 +289,43 @@ class DatabaseControl:
         print(itemList)
         return itemList
     pass
+
+    def phase3Part6(self):
+        self.myCursor.execute('CALL phase3_part6()')
+        # self.myCursor.callproc('phase3_part3', (userX,))
+        itemList = self.myCursor.fetchall()
+        print(itemList)
+        return itemList
+    pass
+
+    def phase3Part7(self):
+        self.myCursor.execute('CALL phase3_part7()')
+        # self.myCursor.callproc('phase3_part3', (userX,))
+        itemList = self.myCursor.fetchall()
+        print(itemList)
+        return itemList
+    pass
+
+    def phase3Part8(self):
+        self.myCursor.execute('CALL phase3_part8()')
+        # self.myCursor.callproc('phase3_part3', (userX,))
+        itemList = self.myCursor.fetchall()
+        print(itemList)
+        return itemList
+    pass
+
+    def phase3Part9(self):
+        self.myCursor.execute('CALL phase3_part9()')
+        # self.myCursor.callproc('phase3_part3', (userX,))
+        itemList = self.myCursor.fetchall()
+        print(itemList)
+        return itemList
+    pass
+
+    def phase3Part10(self):
+        self.myCursor.execute('CALL phase3_part10()')
+        # self.myCursor.callproc('phase3_part3', (userX,))
+        itemList = self.myCursor.fetchall()
+        print(itemList)
+        return itemList
+    pass

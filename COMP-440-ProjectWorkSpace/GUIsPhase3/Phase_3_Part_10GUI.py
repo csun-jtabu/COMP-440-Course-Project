@@ -4,7 +4,7 @@ import DatabaseControl
 import MainMenuGUI
 
 
-class UserTableGUITemplate:
+class Phase_3_Part10:
     def __init__(self, userName, password, userList, heading):
         self.userName = userName
         self.password = password
@@ -25,7 +25,7 @@ class UserTableGUITemplate:
 
         self.heading = tk.Label(self.frame, text=self.headingName, font=('Arial', 16))
 
-        self.table = ttk.Treeview(self.frame, columns=('userName', 'firstName', 'lastName', 'email'),
+        self.table = ttk.Treeview(self.frame, columns=('userNameA', 'userNameB'),
                                   show='headings')
         self.verticalScroll = ttk.Scrollbar(self.frame, orient='vertical', command=self.table.yview)
         self.horizontalScroll = ttk.Scrollbar(self.frame, orient='horizontal', command=self.table.xview)
@@ -34,14 +34,11 @@ class UserTableGUITemplate:
 
         self.backBtn = tk.Button(self.frame, bg='#CFDFEF', text='Go Back', font=('Arial', 16), command=self.goBack,width=8)
 
-        self.table.column('userName', width=150)
-        self.table.column('firstName', width=150)
-        self.table.column('lastName', width=150)
-        self.table.column('email', width=150)
-        self.table.heading('userName', text='User Name')
-        self.table.heading('firstName', text='First Name')
-        self.table.heading('lastName', text='Last Name')
-        self.table.heading('email', text='Email')
+        self.table.column('userNameA', width=150)
+        self.table.column('userNameB', width=150)
+        self.table.heading('userNameA', text='Username A')
+        self.table.heading('userNameB', text='Username B')
+
 
     pass
 
@@ -67,6 +64,6 @@ class UserTableGUITemplate:
         if self.userList != None:
             counter = 0
             for user in self.userList:
-                self.table.insert(parent='', index=counter, values=(user[0], user[2], user[3], user[4]))
+                self.table.insert(parent='', index=counter, values=(user[0], user[1]))
                 counter = counter + 1
     pass

@@ -3,7 +3,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `phase3_part3`(
 BEGIN
 	SELECT *
 	FROM item i3
-	WHERE i3.productid = (SELECT i.productid
+	WHERE i3.productid IN (SELECT i.productid
 		FROM item i INNER JOIN review r
 		ON i.productid = r.productid
 		WHERE (i.user_inserted = userName) 
