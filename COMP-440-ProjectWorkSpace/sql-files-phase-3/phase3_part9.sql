@@ -1,6 +1,6 @@
 CREATE DEFINER=`root`@`localhost` PROCEDURE `phase3_part9`()
 BEGIN
-	(SELECT t1.username, t1.password, t1.firstName, t1.lastName, t1.email
+	(SELECT DISTINCT t1.username, t1.password, t1.firstName, t1.lastName, t1.email
 	FROM
 		(SELECT u.username, u.password, u.firstName, u.lastName, u.email
 		FROM user u INNER JOIN item i
