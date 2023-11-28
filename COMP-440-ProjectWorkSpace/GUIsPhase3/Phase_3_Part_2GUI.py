@@ -1,6 +1,7 @@
 import tkinter as tk
 import DatabaseControl
 import MainMenuGUI
+import ErrorBoxGUI
 from phase3templates import UserTableGUITemplate
 
 class Phase_3_Part2:
@@ -56,8 +57,12 @@ class Phase_3_Part2:
         print(self.generatedList)
         self.db.myCursor.close()
         self.db.db.close()
-        self.searchPage.destroy()
-        headingName = 'Users who posted 2 different items same day'
-        table = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
-        #table.extraInfo('')
+        if not self.generatedList:
+            self.db = DatabaseControl.DatabaseControl()
+            ErrorBoxGUI.ErrorBoxGUI('No users were found.')
+        else:
+            self.searchPage.destroy()
+            headingName = 'Users who posted 2 different items same day'
+            table = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+            #table.extraInfo('')
     pass

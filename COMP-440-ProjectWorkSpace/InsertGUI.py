@@ -1,6 +1,7 @@
 import tkinter as tk
 import DatabaseControl
 import MainMenuGUI
+import ErrorBoxGUI
 
 class InsertGUI:
     def __init__(self, userName, password):
@@ -56,12 +57,15 @@ class InsertGUI:
     pass
 
     def insert_item(self):
-        self.db.insertItem(self.userName, self.titleVar.get(),
-                           self.descriptionVar.get(), self.categoryVar.get(), self.priceVar.get())
-        self.db.myCursor.close()
-        self.db.db.close()
-        self.root.destroy()
-        menu = MainMenuGUI.MainMenuGUI(self.userName, self.password)
+        if (self.titleVar.get() == "" or self.descriptionVar.get() == "" or self.categoryVar.get() == "" or self.priceVar.get() == ""):
+            ErrorBoxGUI.ErrorBoxGUI('Text fields cannot be blank.')
+        else:
+            self.db.insertItem(self.userName, self.titleVar.get(),
+                               self.descriptionVar.get(), self.categoryVar.get(), self.priceVar.get())
+            self.db.myCursor.close()
+            self.db.db.close()
+            self.root.destroy()
+            menu = MainMenuGUI.MainMenuGUI(self.userName, self.password)
     pass
 
     def goBack(self):

@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import DatabaseControl
 import MainMenuGUI
+import ErrorBoxGUI
 from phase3templates import ItemTableGUITemplate
 
 class Phase_3_Part3:
@@ -53,7 +54,11 @@ class Phase_3_Part3:
         self.generatedList = self.db.phase3Part3(self.dropDownMenu.get())
         self.db.myCursor.close()
         self.db.db.close()
-        self.searchPage.destroy()
-        headingName = 'All the items posted by user X, \nsuch that all the comments are "Excellent" or "good"'
-        table = ItemTableGUITemplate.ItemTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+        if not self.generatedList:
+            self.db = DatabaseControl.DatabaseControl()
+            ErrorBoxGUI.ErrorBoxGUI('This user has no excellent or good reviews.')
+        else:
+            self.searchPage.destroy()
+            headingName = 'All the items posted by user X, \nsuch that all the comments are "Excellent" or "good"'
+            table = ItemTableGUITemplate.ItemTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
     pass
