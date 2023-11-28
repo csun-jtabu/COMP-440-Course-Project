@@ -2,6 +2,7 @@ import tkinter as tk
 import tkcalendar
 import DatabaseControl
 import MainMenuGUI
+import ErrorBoxGUI
 from phase3templates import UserTableGUITemplate
 
 class Phase_3_Part4:
@@ -51,10 +52,14 @@ class Phase_3_Part4:
 
     def search(self):
         self.generatedList = self.db.phase3Part4(self.calendar.get())
-        mostNumItems = self.generatedList[0][5]
         self.db.myCursor.close()
         self.db.db.close()
-        self.searchPage.destroy()
-        headingName = 'Users who posted the most number of items on a specific date'
-        table = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+        if not self.generatedList:
+            self.db = DatabaseControl.DatabaseControl()
+            ErrorBoxGUI.ErrorBoxGUI('No products were inserted on this day.\nPlease select a different date.')
+        else:
+            mostNumItems = self.generatedList[0][5]
+            self.searchPage.destroy()
+            headingName = 'Users who posted the most number of items on a specific date'
+            table = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
     pass

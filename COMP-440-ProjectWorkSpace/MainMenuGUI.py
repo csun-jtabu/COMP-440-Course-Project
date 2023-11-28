@@ -3,6 +3,7 @@ import LoginPageGUI
 import SearchGUI
 import DatabaseControl
 import InsertGUI
+import ErrorBoxGUI
 from GUIsPhase3 import Phase_3_Part_2GUI
 from GUIsPhase3 import Phase_3_Part_3GUI
 from GUIsPhase3 import Phase_3_Part_4GUI
@@ -130,43 +131,63 @@ class MainMenuGUI:
         self.generatedList = self.db.phase3Part6()
         self.db.myCursor.close()
         self.db.db.close()
-        self.menuPage.destroy()
-        headingName = 'Users who never posted excellent items (items with at least 3 excellent reviews)'
-        part6 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+        if not self.generatedList:
+            self.db = DatabaseControl.DatabaseControl()
+            ErrorBoxGUI.ErrorBoxGUI('No users were found.')
+        else:
+            self.menuPage.destroy()
+            headingName = 'Users who never posted excellent items (items with at least 3 excellent reviews)'
+            part6 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
     pass
 
     def phase3Part7(self):
         self.generatedList = self.db.phase3Part7()
         self.db.myCursor.close()
         self.db.db.close()
-        self.menuPage.destroy()
-        headingName = 'All the users who never posted a poor review'
-        part7 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+        if not self.generatedList:
+            self.db = DatabaseControl.DatabaseControl()
+            ErrorBoxGUI.ErrorBoxGUI('No users were found.')
+        else:
+            self.menuPage.destroy()
+            headingName = 'All the users who never posted a poor review'
+            part7 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
     pass
 
     def phase3Part8(self):
         self.generatedList = self.db.phase3Part8()
         self.db.myCursor.close()
         self.db.db.close()
-        self.menuPage.destroy()
-        headingName = 'All the users who posted reviews, but each of their reviews is poor'
-        part8 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+        if not self.generatedList:
+            self.db = DatabaseControl.DatabaseControl()
+            ErrorBoxGUI.ErrorBoxGUI('No users were found.')
+        else:
+            self.menuPage.destroy()
+            headingName = 'All the users who posted reviews, but each of their reviews is poor'
+            part8 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
     pass
 
     def phase3Part9(self):
         self.generatedList = self.db.phase3Part9()
         self.db.myCursor.close()
         self.db.db.close()
-        self.menuPage.destroy()
-        headingName = 'All users such that each item they posted so far never received any poor review'
-        part9 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+        if not self.generatedList:
+            self.db = DatabaseControl.DatabaseControl()
+            ErrorBoxGUI.ErrorBoxGUI('No users were found.')
+        else:
+            self.menuPage.destroy()
+            headingName = 'All users such that each item they posted so far never received any poor review'
+            part9 = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
     pass
 
     def phase3Part10(self):
         self.generatedList = self.db.phase3Part10()
         self.db.myCursor.close()
         self.db.db.close()
-        self.menuPage.destroy()
-        headingName = 'User pair(A,B) such that they always gave each other excellent reviews for every single item'
-        part10 = Phase_3_Part_10GUI.Phase_3_Part10(self.userName, self.password, self.generatedList, headingName)
+        if not self.generatedList:
+            self.db = DatabaseControl.DatabaseControl()
+            ErrorBoxGUI.ErrorBoxGUI('No user pairs were found.')
+        else:
+            self.menuPage.destroy()
+            headingName = 'User pair(A,B) such that they always gave each other excellent reviews for every single item'
+            part10 = Phase_3_Part_10GUI.Phase_3_Part10(self.userName, self.password, self.generatedList, headingName)
     pass

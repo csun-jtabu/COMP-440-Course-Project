@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import DatabaseControl
 import MainMenuGUI
+import ErrorBoxGUI
 from phase3templates import UserTableGUITemplate
 
 class Phase_3_Part5:
@@ -56,10 +57,13 @@ class Phase_3_Part5:
     def search(self):
         print(self.dropDownMenu1.get() + self.dropDownMenu2.get())
         self.generatedList = self.db.phase3Part5(self.dropDownMenu1.get(), self.dropDownMenu2.get())
-
         self.db.myCursor.close()
         self.db.db.close()
-        self.searchPage.destroy()
-        headingName = 'List the users who are favorited by X and Y'
-        table = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
+        if not self.generatedList:
+            self.db = DatabaseControl.DatabaseControl()
+            ErrorBoxGUI.ErrorBoxGUI('No users were found.')
+        else:
+            self.searchPage.destroy()
+            headingName = 'List the users who are favorited by X and Y'
+            table = UserTableGUITemplate.UserTableGUITemplate(self.userName, self.password, self.generatedList, headingName)
     pass
